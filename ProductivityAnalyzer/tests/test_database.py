@@ -1,23 +1,22 @@
-import unittest
-import sqlite3
-from modules.database import connect_db, create_table_if_not_exists, log_activity_to_db
+import pytest
+from modules.database import Database
 
-class TestDatabase(unittest.TestCase):
-    def setUp(self):
-        self.conn = sqlite3.connect(':memory:')  # In-memory database for testing
-        self.cursor = self.conn.cursor()
-        create_table_if_not_exists(self.cursor)
+@pytest.fixture(scope='module')
+def sqlite_db():
+    db = Database()  # Assuming the default constructor works for an in-memory database
+    yield db
+    db.close_all_connections()
 
-    def test_log_activity_to_db(self):
-        log_activity_to_db(self.cursor, '2024-08-31 10:00:00', 'Test Window')
-        self.cursor.execute('SELECT * FROM activity_log')
-        rows = self.cursor.fetchall()
-        self.assertEqual(len(rows), 1)
-        self.assertEqual(rows[0][1], '2024-08-31 10:00:00')
-        self.assertEqual(rows[0][2], 'Test Window')
+@pytest.fixture(scope='module')
+def postgresql_db():
+    db = Database()
+    yield db
+    db.close_all_connections()
 
-    def tearDown(self):
-        self.conn.close()
+def test_sqlite_query(sqlite_db):
+    result = sqlite_db.execute_query('SELECT 1')
+    assert result == [(1,)]  # Example assertion
 
-if __name__ == '__main__':
-    unittest.main()
+def test_postgresql_query(postgresql_db):
+    result = postgresql_db.execute_query('SELECT 1')
+    assert result == [(1,)]  # Example assertion

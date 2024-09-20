@@ -3,33 +3,64 @@
 # Author: Mohammad Zeesahn
 # Email: zeeshansayfyebusiness@gmail.com
 # License: MIT License
-# Description: This file is the main content  for the Remote 
+# Description: This file is the main content for the Remote 
 # Work Productivity Analyzer application.
 # ----------------------------------------------------------------------------
 
-
 # main.py
 import sys
-import os 
+
 from PyQt5.QtWidgets import QApplication
 from modules.ui import ProductivityAnalyzerApp
+from modules.ui import ProductivityAnalyzerHome
+from modules.database import Database  # Adjust import according to your structure
+from modules.tracker import FocusTrackerApp  # Adjust import according to your structure
 
-# Add the parent directory of 'modules' to the system path
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+def main():
+    app = QApplication(sys.argv)
+    
+    db = None
+    try:
+        # Initialize database and tracker
+        db = Database()
+         # Example usage:
+        conn = db.get_connection()
+        if conn:
+            print("Connection obtained successfully")
+            # Your application logic here
+            db.close_connection(conn)
+
+        tracker = FocusTrackerApp()
+        
+        # Create the UI
+        analyzer = ProductivityAnalyzerApp()
+        
+       
+        
+        # Show the UI
+        analyzer.show()
+        
+        # Start tracking
+        tracker.start_tracking()
+        
+        # Run the application
+        try:
+            sys.exit(app.exec_())
+        except Exception as e:
+            print(f"Error executing application: {e}")
+            sys.exit(1)
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        sys.exit(1)
+    finally:
+        if db:
+            db.close_all_connections()  # Correct method to close the database connection
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    # Create and show the main application window
-    try:
-        analyzer = ProductivityAnalyzerApp()
-        analyzer.show()
-    except Exception as e:
-        print(f"Error creating ProductivityAnalyzerApp: {e}")
-        sys.exit(1)
+    window = ProductivityAnalyzerHome()
+    window.show()
+    sys.exit(app.exec_())
 
-    # Execute the application
-    try:
-        sys.exit(app.exec_())
-    except Exception as e:
-        print(f"Error executing application: {e}")
-        sys.exit(1)
+  

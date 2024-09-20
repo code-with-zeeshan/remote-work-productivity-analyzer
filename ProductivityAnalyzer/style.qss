@@ -1,23 +1,87 @@
 /* style.qss */
+QMainWindow {
+    background-color: #f4f4f9; /* Light background for the dashboard */
+}
+
+QMenuBar {
+    background-color: #2d2d2d; /* Dark top navigation bar */
+    color: white;
+    height: 40px;
+}
+
+QMenuBar::item {
+    background: transparent;
+    padding: 5px 15px;
+}
+
+QMenuBar::item:selected {
+    background: #565656;
+}
+
+QMenu {
+    background-color: #2d2d2d;
+    color: white;
+}
+
 QWidget {
-    background-color: #2C3E50;
-    color: #ECF0F1;
     font-family: Arial, sans-serif;
 }
 
 QPushButton {
-    background-color: #3498DB;
-    border: none;
+    background-color: #007bff;
     color: white;
+    border-radius: 4px;
     padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
 }
 
 QPushButton:hover {
-    background-color: #2980B9;
+    background-color: #0056b3;
 }
 
+QLabel {
+    color: #333;
+    font-size: 16px;
+}
+
+QLineEdit {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+
+QLineEdit:focus {
+    border: 1px solid #007bff;
+}
+
+QComboBox {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+
+QComboBox:focus {
+    border: 1px solid #007bff;
+}
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+    border-left-width: 1px;
+    border-left-color: darkgray;
+    border-left-style: solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+QComboBox::down-arrow {
+    image: url(:/icons/arrow_down.png);
+}
+
+QComboBox::down-arrow:on {
+    image: url(:/icons/arrow_up.png);
+}
 QTextEdit {
     background-color: #34495E;
     border: none;
