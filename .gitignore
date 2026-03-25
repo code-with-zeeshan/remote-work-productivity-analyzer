@@ -79,6 +79,7 @@ logs/productivity_analyzer.log
 exports/
 *.csv
 !requirements*.txt
+!*.txt
 
 # ──── Coverage & Testing ────
 htmlcov/
@@ -101,11 +102,13 @@ dmypy.json
 # ──── Docker ────
 docker-compose.override.yml
 
+# ──── Diagnostic Scripts ────
+diagnose.py
+verify_final.py
+
 # ──── Misc ────
 *.bak
 *.tmp
 *.temp
 *.orig
-diagnose.py
-verify_final.py
 category_rules.json

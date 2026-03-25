@@ -242,7 +242,7 @@ See [CHANGELOG.md](CHANGELOG.md) for version history.
 
 ## Architecture Decisions
 
-See [docs/adr/](docs/adr/) for Architecture Decision Records.
+See [docs/adr/](ProductivityAnalyzer/docs/adr/) for Architecture Decision Records.
 
 ## License
 
