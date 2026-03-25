@@ -1,0 +1,116 @@
+# pyproject.toml — Project configuration
+
+[project]
+name = "ProductivityAnalyzer"
+version = "2.0.0"
+description = "Desktop productivity tracking and analytics tool"
+requires-python = ">=3.10"
+
+# ──── Black (Formatter) ────
+[tool.black]
+line-length = 110
+target-version = ['py310', 'py311', 'py312', 'py313']
+skip-string-normalization = false
+
+# ──── Ruff (Linter) ────
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort (import sorting)
+    "N",    # pep8-naming
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "SIM",  # flake8-simplify
+    "C4",   # flake8-comprehensions
+    "RUF",  # ruff-specific rules
+]
+ignore = [
+    "E501",    # line too long (handled by Black)
+    "B008",    # function calls in defaults
+    "SIM108",  # ternary preference
+    "RUF012",  # mutable class attributes
+    "RUF001",  # ambiguous unicode (we use emojis intentionally in UI)
+    "RUF013",  # implicit Optional (handled by mypy)
+    "RUF059",  # unused unpacked variable (common in test assertions)
+    "N802",    # function name casing (Qt overrides like closeEvent)
+    "DTZ001",  # datetime() without tzinfo (desktop app, local time is fine)
+    "DTZ005",  # datetime.now() without tz (desktop app, local time is fine)
+    "DTZ007",  # strptime without %z (external API format)
+    "DTZ011",  # date.today() (desktop app, local date is fine)
+    "C401",    # unnecessary generator (readability preference)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["B011", "SIM300", "F841"]
+"**/__init__.py" = ["F401"]  # unused imports in __init__ are intentional
+
+[tool.ruff.lint.isort]
+known-first-party = ["config", "database", "tracking", "reporting", "services", "ui", "utils"]
+
+# ──── Pytest ────
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "-v",
+    "--tb=short",
+    "--strict-markers",
+    "--cov=.",
+    "--cov-report=term-missing",
+    "--cov-report=html:htmlcov",
+    "--cov-config=pyproject.toml",
+]
+
+# ──── Coverage ────
+[tool.coverage.run]
+source = ["config", "database", "tracking", "reporting", "services", "utils"]
+omit = [
+    "tests/*",
+    "ui/*",
+    "*/migrations/*",
+    "main.py",
+    "setup.py",
+    "diagnose.py",
+]
+
+[tool.coverage.report]
+fail_under = 35
+show_missing = true
+skip_empty = true
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if __name__ == .__main__.",
+    "raise NotImplementedError",
+    "pass",
+    "except ImportError",
+]
+
+# ──── MyPy (Type Checker) ────
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+check_untyped_defs = true
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "PyQt5.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "pygetwindow.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "matplotlib.*"
+ignore_missing_imports = true

@@ -1,0 +1,22 @@
+# Core
+PyQt5>=5.15.10
+psycopg2-binary>=2.9.9
+python-dotenv>=1.0.0
+
+# Tracking
+pygetwindow>=0.0.9
+
+# Data & Visualization
+pandas>=2.2.0
+matplotlib>=3.8.0
+
+# PDF Export
+reportlab>=4.1.0
+
+# Utilities
+python-dateutil>=2.8.2
+
+# Error Tracking
+sentry-sdk>=2.0.0
+
+# Dev Dependencies (install with: pip install -r requirements-dev.txt)
