@@ -36,7 +36,7 @@ class ProductivityTrendChart(FigureCanvas):
         unproductive = [s.unproductive_minutes for s in summaries]
 
         # Score line
-        line1 = ax.plot(dates, scores, "o-", color="#2ecc71", linewidth=2, markersize=6, label="Score")
+        ax.plot(dates, scores, "o-", color="#2ecc71", linewidth=2, markersize=6, label="Score")
 
         # Fill area
         ax.fill_between(dates, scores, alpha=0.1, color="#2ecc71")

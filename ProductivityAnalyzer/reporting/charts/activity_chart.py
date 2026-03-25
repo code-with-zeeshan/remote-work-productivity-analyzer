@@ -56,7 +56,7 @@ class ActivityBarChart(FigureCanvas):
                 )
                 counts.append(val)
             offset = (i - 1.5) * bar_width
-            bars = ax.bar(
+            ax.bar(
                 [x + offset for x in x_positions],
                 counts,
                 bar_width,
