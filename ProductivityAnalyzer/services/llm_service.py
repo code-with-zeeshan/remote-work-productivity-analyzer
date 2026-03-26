@@ -62,6 +62,7 @@ Data:
 Be concise, specific, and actionable. Do not use emojis."""
 
         try:
+            assert self._client is not None
             response = self._client.chat.completions.create(  # type: ignore[union-attr]
                 model="gpt-3.5-turbo",
                 messages=[{"role": "user", "content": prompt}],
@@ -91,6 +92,7 @@ Question: {question}
 Answer briefly in 1-3 sentences."""
 
         try:
+            assert self._client is not None
             response = self._client.chat.completions.create(  # type: ignore[union-attr]
                 model="gpt-3.5-turbo",
                 messages=[{"role": "user", "content": prompt}],
